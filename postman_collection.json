@@ -1,0 +1,438 @@
+{
+	"info": {
+		"_postman_id": "d35ea759-b571-4c12-bee0-7545f222b5f3",
+		"name": "Test - Inter",
+		"description": "Collection para teste dos endpoinst criados.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Cadastrar Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79c8d207-09f7-44d3-9415-02cec71d9cfd",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/v1/usuario',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"                        \tnome:\"UsuarioTeste\",",
+									"                        \temail:\"UsuarioTeste@test.com\"",
+									"                        })",
+									"    }",
+									"}, function (err, res) {",
+									"        pm.test(\"O usuário foi criado sem o header Authorization\", function () {",
+									"            pm.response.to.have.status(201);",
+									"        });",
+									"});",
+									"",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/v1/usuario',",
+									"    method: 'POST',",
+									"    header: 'Authorization:test',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"                        \tnome:\"UsuarioTeste\",",
+									"                        \temail:\"UsuarioTeste@test.com\"",
+									"                        })",
+									"    }",
+									"}, function (err, res) {",
+									"        pm.test(\"O usuário foi criado sem o header Authorization\", function () {",
+									"                pm.response.to.have.status(201);",
+									"            });",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "16784781885853408782788737252481797171732650288837681265147459370967482930593019244208785823325940994176133928645510970699659585408815697088012319523250396184999507799903728139315544553023579757223463255696986190540202305369050968509296497385765172579643280222613285928161276772505872830968453220535190943334442402087954112237631141136567525114793769520846804898806688083982861439474371835018662232956861005915049257929781729439870673062731870135716636285264154398325716334349574648295389082638307852768421980749600358193375513231977435922247556703719940206085117702253235197924149384356207586643676695105709520723121",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\":\"Maria\",\n\t\"email\":\"Maria@test.com\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/v1/usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuario"
+							]
+						},
+						"description": "Cadastra usuário no sistema.\n\nSerá reteornada a chave pública após a criação do usuário, caso o header Authorization não seja passado, será retornada a mensagem 'Usuario criado sem chave publica e privada', ou seja, não será atribuída uma chave publica e privada para esse usuário."
+					},
+					"response": []
+				},
+				{
+					"name": "Lista usuários",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff8b2859-8966-482d-8338-5a43c8c7d750",
+								"exec": [
+									"tests[\"Os usuários foram listados\"] = responseCode.code === 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "19666724265686299095260479714705807318724448456310358224791395116948681669576720328556232940813841434400185036261172052263335760991068258414482351805704716985663630447876081001570738433229153455130110804066862041679346235662961060661770083202210733970637722791323900610090210374695709380552504314715613975353446166085423941459912299457598569406948144648979015317111501895884625052731718147307009115777206540096692268362534979887867491226784144716401039462722444851852505760768460082962242290618214824640696801577805885543308449255550865056010443474133346462753127364853124088035071941644505209959736713580842447226469",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/v1/usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuario"
+							]
+						},
+						"description": "Lista todos os usuários"
+					},
+					"response": []
+				},
+				{
+					"name": "Busca Usuario por Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc50bb23-c3b3-4a6d-8314-09786accd57f",
+								"exec": [
+									"tests[\"O usuário com o id 1 foi retornado\"] = responseCode.code === 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVVOly4afmIKDOotuDNunWbC631yoWSNiXWdcgCuwNEdvmVP11slpF+IAydQQXMfWH0Z8oAtm3uP+Ck+eBaJdv43ljI+lCwcKIC5bTluQBrHNDe+yAtp/dQ8lb4v0ei+mtnMEn7F02fATLJqXzGTwQml2TWJqx24PwVunzYdDmsecDu5i8ssP+lW+YM0ccbuv/bPWp+dvZgvv6h/w5PSQguHUbFFm2oZNLr2siZBnpxthQE3403GvD8OUm9/SZ6V1Aegzq0IR3HdfFlELZmdF7q+i8/WQpfbOHnphS46ulSxiDCs7UM9xAFwcgShSpK2Qhj5DV1tUnp/mSH8cGyP1wIDAQAB",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/v1/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuario",
+								"1"
+							]
+						},
+						"description": "Busca o usuário no sistema pelo id cadastrado, caso não encontre nenhuma é retornada uma mensagem de erro e o status http 400(Bad Request).\n\nCaso o header Authorization com a chave publica não seja passado, os dados de nome e email serão retornados criptografados."
+					},
+					"response": []
+				},
+				{
+					"name": "Atualiza Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "247d65af-fd79-4e57-b2b8-1487877a40fa",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/v1/usuario',",
+									"    method: 'PUT',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"                        \tid: 1,",
+									"                        \tnome:\"Ana\",",
+									"                        \temail:\"Ana@test.com\"",
+									"                        })",
+									"    }",
+									"}, function (err, res) {",
+									"    ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 1,\n\t\"nome\":\"Ana\",\n\t\"email\":\"Ana@test.com\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/v1/usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuario"
+							]
+						},
+						"description": "Atualiza as informações do usuário no sistema.\nRetorna a chave publica do usuário após a atualização dos dados."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79fd7150-3689-4c8f-9af5-62ed31fe7544",
+								"exec": [
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/v1/usuario',",
+									"    method: 'DELETE',",
+									"    header: 'Authorization:test',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"                        \tnome:\"UsuarioTeste\",",
+									"                        \temail:\"UsuarioTeste@test.com\"",
+									"                        })",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});",
+									"",
+									"tests[\"O usuário com o id 1 foi removido\"] = responseCode.code === 200"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/v1/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuario",
+								"1"
+							]
+						},
+						"description": "Remove o usuario pelo id."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DigitoUnico",
+			"item": [
+				{
+					"name": "Calcula Digito Unico",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1b15d9a9-1021-495e-9c56-969a9ece9025",
+								"exec": [
+									"pm.sendRequest(\"http://localhost:8080/v1/digito?valor=9845\", function (err, response) {",
+									"    tests[\"O digito calculado foi 8\"] = responseCode.body === 8",
+									"});",
+									"",
+									"",
+									"pm.sendRequest(\"http://localhost:8080/v1/digito?valor=9845&repeticoes=4\", function (err, response) {",
+									"    tests[\"O digito calculado foi 5\"] = responseCode.body === 5",
+									"});",
+									"",
+									"",
+									"pm.sendRequest(\"localhost:8080/v1/usuario\", function (err, response) {",
+									"    tests[\"O digito calculado foi 5\"] = responseCode.body === 5",
+									"});",
+									"",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/v1/usuario',",
+									"    method: 'POST',",
+									"    header: 'Authorization:test',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"                        \tnome:\"UsuarioTeste\",",
+									"                        \temail:\"UsuarioTeste@test.com\"",
+									"                        })",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});",
+									"",
+									"",
+									"pm.sendRequest(\"http://localhost:8080/v1/digito?valor=9845&usuarioId=1&repeticoes=4\", function (err, response) {",
+									"    tests[\"O digito calculado foi 5 e os cálculos foram associados com o usuário de id 1\"] = responseCode.body === 5",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/digito?valor=9845&usuarioId=2&repeticoes=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"digito"
+							],
+							"query": [
+								{
+									"key": "valor",
+									"value": "9845"
+								},
+								{
+									"key": "usuarioId",
+									"value": "2"
+								},
+								{
+									"key": "repeticoes",
+									"value": "4"
+								}
+							]
+						},
+						"description": "Realiza o calculo dos digitos.\n\nCaso o usuário id seja passado, todos os cálculos executados são associados ao usuário desse id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Segurança",
+			"item": [
+				{
+					"name": "Recupera chave publica por usuário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6e4ed3cb-c5e3-4c92-b5a4-3b9b8f1b850e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/auth/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"auth",
+								"1"
+							]
+						},
+						"description": "Retorna a chava publica do usuáiro utlizando o id."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

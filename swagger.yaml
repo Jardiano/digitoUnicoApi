@@ -1,0 +1,535 @@
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: basic-error-controller
+    description: Basic Error Controller
+  - name: digito-unico-controller
+    description: Digito Unico Controller
+  - name: security-data-controller
+    description: Security Data Controller
+  - name: usuario-controller
+    description: Usuario Controller
+paths:
+  /error:
+    get:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingGET
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    head:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingHEAD
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    post:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingDELETE
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    options:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingOPTIONS
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    patch:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+  '/v1/auth/{usuarioId}':
+    get:
+      tags:
+        - security-data-controller
+      summary: Recupera a chave publica do usuário
+      operationId: getChavePublicaUsuarioUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: usuarioId
+          in: path
+          description: usuarioId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - security-data-controller
+      summary: Gera novas chaves publica e privada utilizando o id do usuário
+      operationId: resetChavesUsuarioUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: usuarioId
+          in: path
+          description: usuarioId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /v1/digito:
+    get:
+      tags:
+        - digito-unico-controller
+      summary: Realiza o calculo dos digitos
+      description: 'Caso o id do usuário seja passado, todos os cálculos executados são associados ao usuário desse id'
+      operationId: calculaDigitoUnicoUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: repeticoes
+          in: query
+          description: repeticoes
+          required: false
+          type: integer
+          format: int32
+        - name: usuarioId
+          in: query
+          description: usuarioId
+          required: false
+          type: integer
+          format: int64
+        - name: valor
+          in: query
+          description: valor
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: integer
+            format: int32
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /v1/usuario:
+    get:
+      tags:
+        - usuario-controller
+      summary: Lista todos os usuários cadastrados
+      operationId: listaUsuariosUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UsuarioDTO'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - usuario-controller
+      summary: Cadastra um usuário no sistema
+      description: 'Será reteornada a chave pública após a criação do usuário, caso o header Authorization não seja passado, será retornada a mensagem ''Usuario criado sem chave publica e privada'', ou seja, não será atribuída uma chave publica e privada para esse usuário.'
+      operationId: cadastrarUsuarioUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: false
+          type: string
+        - in: body
+          name: usuarioDTO
+          description: usuarioDTO
+          required: true
+          schema:
+            $ref: '#/definitions/UsuarioDTO'
+      responses:
+        '201':
+          description: Created
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - usuario-controller
+      summary: Atualiza dados do usuário no sistema
+      description: Retorna a chave publica do usuário após a atualização dos dados
+      operationId: atualizarUsuarioUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: usuarioDTO
+          description: usuarioDTO
+          required: true
+          schema:
+            $ref: '#/definitions/UsuarioDTO'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/v1/usuario/{usuarioId}':
+    get:
+      tags:
+        - usuario-controller
+      summary: Busca o usuário pelo id cadastrado no sistema
+      description: 'Caso o header Authorization com a chave publica não seja passado, os dados de nome e email serão retornados criptografados.'
+      operationId: buscarUsuarioPorIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: false
+          type: string
+        - name: usuarioId
+          in: path
+          description: usuarioId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UsuarioDTO'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - usuario-controller
+      summary: Remove o usuário do sistema
+      operationId: deletarUsuarioUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: usuarioId
+          in: path
+          description: usuarioId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+definitions:
+  DigitoUnicoDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      params:
+        type: string
+      resultado:
+        type: integer
+        format: int32
+    title: DigitoUnicoDTO
+  ModelAndView:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      model:
+        type: object
+      modelMap:
+        type: object
+        additionalProperties:
+          type: object
+      reference:
+        type: boolean
+      status:
+        type: string
+        enum:
+          - '100'
+          - '101'
+          - '102'
+          - '103'
+          - '200'
+          - '201'
+          - '202'
+          - '203'
+          - '204'
+          - '205'
+          - '206'
+          - '207'
+          - '208'
+          - '226'
+          - '300'
+          - '301'
+          - '302'
+          - '303'
+          - '304'
+          - '305'
+          - '307'
+          - '308'
+          - '400'
+          - '401'
+          - '402'
+          - '403'
+          - '404'
+          - '405'
+          - '406'
+          - '407'
+          - '408'
+          - '409'
+          - '410'
+          - '411'
+          - '412'
+          - '413'
+          - '414'
+          - '415'
+          - '416'
+          - '417'
+          - '418'
+          - '419'
+          - '420'
+          - '421'
+          - '422'
+          - '423'
+          - '424'
+          - '426'
+          - '428'
+          - '429'
+          - '431'
+          - '451'
+          - '500'
+          - '501'
+          - '502'
+          - '503'
+          - '504'
+          - '505'
+          - '506'
+          - '507'
+          - '508'
+          - '509'
+          - '510'
+          - '511'
+      view:
+        $ref: '#/definitions/View'
+      viewName:
+        type: string
+    title: ModelAndView
+  UsuarioDTO:
+    type: object
+    properties:
+      digitos:
+        type: array
+        items:
+          $ref: '#/definitions/DigitoUnicoDTO'
+      email:
+        type: string
+      id:
+        type: integer
+        format: int64
+      nome:
+        type: string
+    title: UsuarioDTO
+  View:
+    type: object
+    properties:
+      contentType:
+        type: string
+    title: View
